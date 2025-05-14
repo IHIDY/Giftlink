@@ -31,10 +31,6 @@ const searchRoutes = require('./routes/searchRoutes');
 const pinoHttp = require('pino-http');
 const logger = require('./logger');
 
-
-const pinoHttp = require('pino-http');
-const logger = require('./logger');
-
 app.use(pinoHttp({ logger }));
 
 // Use Routes
