@@ -11,11 +11,11 @@ function DetailsPage() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const authenticationToken = sessionStorage.getItem('auth-token');
-        if (!authenticationToken) {
-            navigate('/app/login');
-            return;
-        }
+        // const authenticationToken = sessionStorage.getItem('auth-token');
+        // if (!authenticationToken) {
+        //     navigate('/app/login');
+        //     return;
+        // }
 
         const fetchGift = async () => {
             try {

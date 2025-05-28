@@ -45,8 +45,6 @@ app.use('/api/search', searchRoutes);
 
 app.use('/api/auth', authRoutes);
 
-
-
 // Global Error Handler
 app.use((err, req, res, next) => {
     console.error(err);

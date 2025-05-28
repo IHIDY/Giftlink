@@ -13,7 +13,7 @@
 
 /* Style for product image */
 .product-image-large {
-    width: 100%;
+    width: auto;
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
@@ -48,7 +48,7 @@
     font-size: 1.8rem;
     font-weight: bold;
     margin: 0;
-    color: #ffffff;
+    color: black;
 }
 
 /* Style for comments section */
