@@ -22,6 +22,8 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // Define the /register endpoint
 router.post('/register', async (req, res) => {
     try {
+        console.log("req.body:", req.body);
+
         // Task 1: Connect to the MongoDB database
         const db = await connectToDatabase();
 
@@ -96,6 +98,70 @@ router.post('/login', async (req, res) => {
         return res.status(500).json({ error: 'Internal server error', details: e.message });
     }
 });
+
+// Put this near the top with the other imports
+const { body, validationResult } = require('express-validator');
+
+// Endpoint: PUT /api/auth/update
+router.put('/update',
+    // Task 1: Validate input fields (you can customize as needed)
+    [
+        body('firstName').notEmpty().withMessage('First name is required'),
+        body('lastName').notEmpty().withMessage('Last name is required'),
+    ],
+    async (req, res) => {
+        // Task 2: Validate the input
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            logger.error('Validation errors in update request', errors.array());
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        try {
+            // Task 3: Get email from headers
+            const email = req.headers.email;
+            if (!email) {
+                logger.error('Email not found in the request headers');
+                return res.status(400).json({ error: "Email not found in the request headers" });
+            }
+
+            // Task 4: Connect to DB
+            const db = await connectToDatabase();
+            const collection = db.collection("users");
+
+            // Task 5: Find existing user
+            const existingUser = await collection.findOne({ email });
+            if (!existingUser) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+
+            // Update user fields
+            existingUser.firstName = req.body.firstName;
+            existingUser.lastName = req.body.lastName;
+            existingUser.updatedAt = new Date();
+
+            // Task 6: Update in DB
+            const updatedUser = await collection.findOneAndUpdate(
+                { email },
+                { $set: existingUser },
+                { returnDocument: 'after' }
+            );
+
+            // Task 7: Generate new JWT
+            const payload = {
+                user: {
+                    id: updatedUser.value._id.toString(),
+                },
+            };
+            const authtoken = jwt.sign(payload, JWT_SECRET);
+
+            res.json({ authtoken });
+        } catch (e) {
+            logger.error('Error updating user:', e.message);
+            return res.status(500).send('Internal server error');
+        }
+    }
+);
 
 // Export the router module
 module.exports = router;
