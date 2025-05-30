@@ -22,8 +22,6 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // Define the /register endpoint
 router.post('/register', async (req, res) => {
     try {
-        console.log("req.body:", req.body);
-
         // Task 1: Connect to the MongoDB database
         const db = await connectToDatabase();
 
@@ -98,9 +96,6 @@ router.post('/login', async (req, res) => {
         return res.status(500).json({ error: 'Internal server error', details: e.message });
     }
 });
-
-// Put this near the top with the other imports
-const { body, validationResult } = require('express-validator');
 
 // Endpoint: PUT /api/auth/update
 router.put('/update',
