@@ -32,12 +32,20 @@ A full-stack web application that connects people by allowing them to give and r
 - 🧠 **Sentiment Analysis API** using `natural` NLP library (Enhancing the Search Functionality)
 
 ### 🛣️ Roadmap
+
 ✅ Main Page
+
 ![Main Page Showcase](./assets/MainPage.png)
+
 ✅ Register Page
+
 ![Register Page Showcase](./assets/RegisterPage.png)
+
 ✅ Search Page
+
 ![Search Page Showcase](./assets/SearchPage.png)
+
 ✅ Details Page
-![Details Page Showcase](./assets/DetailsPage.png)
+
+![Details Page Showcase](./assets/Details.png)
 
